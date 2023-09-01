@@ -1,4 +1,6 @@
 class SubsController < ApplicationController
+    before_action :is_moderator?, only: [:update, :edit]
+
     def index
         @subs = Sub.all
     end
@@ -35,6 +37,11 @@ class SubsController < ApplicationController
         end
     end
 
+    def is_moderator?
+        @user = User.find(id: params[:user_id])
+        @user.id == @sub.moderator_id
+    end 
+    
     def sub_params
         params.require(:sub).permit(:title, :description, :moderator_id)
     end

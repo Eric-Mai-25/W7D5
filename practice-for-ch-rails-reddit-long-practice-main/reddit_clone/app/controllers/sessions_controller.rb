@@ -10,10 +10,12 @@ class SessionsController < ApplicationController
         )
         if @user
             login!(@user)
+            redirect_to user_url(@user)
         else
             flash.now[:errors] = ["Invalid username or password"]
             @username = params[:user][:username] # for prefill
             render :new
+        end
     end
 
     def destroy

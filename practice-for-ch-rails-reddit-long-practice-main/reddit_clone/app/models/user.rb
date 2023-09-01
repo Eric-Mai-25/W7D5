@@ -23,6 +23,13 @@ class User < ApplicationRecord
         dependent: :destroy,
         inverse_of: :user
 
+    has_many :posts,
+        class_name: :Post,
+        foreign_key: :author_id,
+        inverse_of: :author,
+        dependent: :destroy
+
+
     def self.find_by_credentials(username, password)
         user = User.find_by(username: username)
         if user && user.is_password?(password)
